@@ -26,12 +26,16 @@ const EmptyGrid = () => {
 function Game() {
 	const [running, setRunning] = useState(false);
 	const [speed, setSpeed] = useState(1000);
+	const [generation, setGeneration] = useState(0);
 	const [grid, setGrid] = useState(() => {
 		return EmptyGrid();
 	});
 
 	const runningRef = useRef(running);
 	runningRef.current = running;
+
+	const generationRef = useRef(generation);
+	generationRef.current = generation;
 
 	const runSim = useCallback(() => {
 		if (!runningRef.current) {
@@ -59,12 +63,21 @@ function Game() {
 				}
 			});
 		});
+		setGeneration(++generationRef.current);
 		setTimeout(runSim, speed);
-	});
+	}, []);
 	return (
 		<>
+			<h1 style={{ display: 'flex', justifyContent: 'center' }}>
+				Conway's Game Of Life
+			</h1>
+			<h3 style={{ display: 'flex', justifyContent: 'center' }}>
+				Generation: {generation}
+			</h3>
 			<div
 				style={{
+					display: 'flex',
+					justifyContent: 'center',
 					display: 'grid',
 					gridTemplateColumns: `repeat(${numCols}, 22px)`,
 				}}
@@ -90,6 +103,7 @@ function Game() {
 				)}
 			</div>
 			<button
+				className="btn"
 				onClick={() => {
 					setRunning(!running);
 					if (!running) {
@@ -102,14 +116,17 @@ function Game() {
 			</button>
 
 			<button
+				className="btn"
 				onClick={() => {
 					setGrid(EmptyGrid());
+					setGeneration(0);
 				}}
 			>
 				clear
 			</button>
 
 			<button
+				className="btn"
 				onClick={() => {
 					const rows = [];
 					for (let i = 0; i < numRows; i++) {
