@@ -25,7 +25,7 @@ const EmptyGrid = () => {
 
 function Game() {
 	const [running, setRunning] = useState(false);
-	const [speed, setSpeed] = useState(1000);
+	const [speed, setSpeed] = useState(400);
 	const [generation, setGeneration] = useState(0);
 	const [grid, setGrid] = useState(() => {
 		return EmptyGrid();
@@ -36,6 +36,9 @@ function Game() {
 
 	const generationRef = useRef(generation);
 	generationRef.current = generation;
+
+	const speedRef = useRef(speed);
+	speedRef.current = speed;
 
 	const runSim = useCallback(() => {
 		if (!runningRef.current) {
@@ -112,7 +115,7 @@ function Game() {
 					}
 				}}
 			>
-				{running ? 'stop' : 'start'}
+				{running ? 'Stop' : 'Start'}
 			</button>
 
 			<button
@@ -122,7 +125,25 @@ function Game() {
 					setGeneration(0);
 				}}
 			>
-				clear
+				Clear
+			</button>
+
+			<button
+				className="btn"
+				onClick={() => {
+					setSpeed(100);
+				}}
+			>
+				Speed Up
+			</button>
+
+			<button
+				className="btn"
+				onClick={() => {
+					setSpeed(1000);
+				}}
+			>
+				Speed Down
 			</button>
 
 			<button
@@ -137,7 +158,7 @@ function Game() {
 					setGrid(rows);
 				}}
 			>
-				random
+				Random
 			</button>
 		</>
 	);
