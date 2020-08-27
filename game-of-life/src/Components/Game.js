@@ -25,7 +25,7 @@ const EmptyGrid = () => {
 
 function Game() {
 	const [running, setRunning] = useState(false);
-	const [speed, setSpeed] = useState(400);
+	const [speed, setSpeed] = useState(1000);
 	const [generation, setGeneration] = useState(0);
 	const [grid, setGrid] = useState(() => {
 		return EmptyGrid();
@@ -131,7 +131,9 @@ function Game() {
 			<button
 				className="btn"
 				onClick={() => {
-					setSpeed(100);
+					if (speed <= 100) {
+						setSpeed(speed + 100);
+					}
 				}}
 			>
 				Speed Up
@@ -140,7 +142,9 @@ function Game() {
 			<button
 				className="btn"
 				onClick={() => {
-					setSpeed(1000);
+					if (speed >= 2000) {
+						setSpeed(speed - 100);
+					}
 				}}
 			>
 				Speed Down
