@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef } from 'react';
 import produce from 'immer';
+import '../../src/App.css';
 
 const numRows = 30;
 const numCols = 30;
@@ -105,65 +106,62 @@ function Game() {
 					))
 				)}
 			</div>
-			<button
-				className="btn"
-				onClick={() => {
-					setRunning(!running);
-					if (!running) {
-						runningRef.current = true;
-						runSim();
-					}
-				}}
-			>
-				{running ? 'Stop' : 'Start'}
-			</button>
+			<div className="btn">
+				<button
+					onClick={() => {
+						setRunning(!running);
+						if (!running) {
+							runningRef.current = true;
+							runSim();
+						}
+					}}
+				>
+					{running ? 'Stop' : 'Start'}
+				</button>
 
-			<button
-				className="btn"
-				onClick={() => {
-					setGrid(EmptyGrid());
-					setGeneration(0);
-				}}
-			>
-				Clear
-			</button>
+				<button
+					onClick={() => {
+						setGrid(EmptyGrid());
+						setGeneration(0);
+					}}
+				>
+					Clear
+				</button>
 
-			<button
-				className="btn"
-				onClick={() => {
-					if (speed <= 100) {
-						setSpeed(speed + 100);
-					}
-				}}
-			>
-				Speed Up
-			</button>
+				<button
+					onClick={() => {
+						if (speed <= 100) {
+							setSpeed(speed + 100);
+						}
+					}}
+				>
+					Speed Up
+				</button>
 
-			<button
-				className="btn"
-				onClick={() => {
-					if (speed >= 2000) {
-						setSpeed(speed - 100);
-					}
-				}}
-			>
-				Speed Down
-			</button>
+				<button
+					onClick={() => {
+						if (speed >= 2000) {
+							setSpeed(speed - 100);
+						}
+					}}
+				>
+					Speed Down
+				</button>
 
-			<button
-				className="btn"
-				onClick={() => {
-					const rows = [];
-					for (let i = 0; i < numRows; i++) {
-						rows.push(
-							Array.from(Array(numCols), () => (Math.random() > 0.5 ? 1 : 0))
-						);
-					}
-					setGrid(rows);
-				}}
-			>
-				Random
-			</button>
+				<button
+					onClick={() => {
+						const rows = [];
+						for (let i = 0; i < numRows; i++) {
+							rows.push(
+								Array.from(Array(numCols), () => (Math.random() > 0.5 ? 1 : 0))
+							);
+						}
+						setGrid(rows);
+					}}
+				>
+					Random
+				</button>
+			</div>
 		</>
 	);
 }

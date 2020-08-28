@@ -3,7 +3,9 @@ import React from 'react';
 function Rules() {
 	return (
 		<div>
-			<h2>Rules of the Game:</h2>
+			<h2>
+				<strong>Rules of the Game:</strong>
+			</h2>
 			<p>
 				Rule 1: Any live cell with fewer than two live neighbours dies, as if by
 				underpopulation.
