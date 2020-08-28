@@ -2,8 +2,8 @@ import React, { useState, useCallback, useRef } from 'react';
 import produce from 'immer';
 import '../../src/App.css';
 
-const numRows = 40;
-const numCols = 40;
+const numRows = 25;
+const numCols = 30;
 
 const operations = [
 	[0, 1],
