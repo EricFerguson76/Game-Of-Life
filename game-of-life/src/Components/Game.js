@@ -2,8 +2,8 @@ import React, { useState, useCallback, useRef } from 'react';
 import produce from 'immer';
 import '../../src/App.css';
 
-const numRows = 30;
-const numCols = 30;
+const numRows = 40;
+const numCols = 40;
 
 const operations = [
 	[0, 1],
@@ -26,7 +26,7 @@ const EmptyGrid = () => {
 
 function Game() {
 	const [running, setRunning] = useState(false);
-	const [speed, setSpeed] = useState(1000);
+	const [speed, setSpeed] = useState(200);
 	const [generation, setGeneration] = useState(0);
 	const [grid, setGrid] = useState(() => {
 		return EmptyGrid();
@@ -68,7 +68,7 @@ function Game() {
 			});
 		});
 		setGeneration(++generationRef.current);
-		setTimeout(runSim, speed);
+		setTimeout(runSim, speedRef.current);
 	}, []);
 	return (
 		<>
@@ -130,9 +130,7 @@ function Game() {
 
 				<button
 					onClick={() => {
-						if (speed <= 100) {
-							setSpeed(speed + 100);
-						}
+						setSpeed(50);
 					}}
 				>
 					Speed Up
@@ -140,9 +138,7 @@ function Game() {
 
 				<button
 					onClick={() => {
-						if (speed >= 2000) {
-							setSpeed(speed - 100);
-						}
+						setSpeed(1000);
 					}}
 				>
 					Speed Down
