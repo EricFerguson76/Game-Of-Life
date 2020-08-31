@@ -1,3 +1,13 @@
-.App {
-	text-align: center;
+.btn {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+button {
+	margin: 10px;
+	background-color: #008cba;
+	font-size: 12px;
+	padding: 10px 24px;
+	border-radius: 4px;
 }

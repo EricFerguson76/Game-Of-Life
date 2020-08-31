@@ -1,12 +1,15 @@
 import React from 'react';
 import Game from './Components/Game';
+import Rules from './Components/Rules';
+import About from './Components/About';
 import './App.css';
 
 function App() {
 	return (
-		<div className="App">
-			<p>Game of Life</p>
+		<div>
 			<Game />
+			<Rules />
+			<About />
 		</div>
 	);
 }

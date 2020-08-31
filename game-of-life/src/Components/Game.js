@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useRef } from 'react';
 import produce from 'immer';
+import '../../src/App.css';
 
-const numRows = 30;
+const numRows = 25;
 const numCols = 30;
 
 const operations = [
@@ -25,13 +26,20 @@ const EmptyGrid = () => {
 
 function Game() {
 	const [running, setRunning] = useState(false);
-	const [speed, setSpeed] = useState(1000);
+	const [speed, setSpeed] = useState(200);
+	const [generation, setGeneration] = useState(0);
 	const [grid, setGrid] = useState(() => {
 		return EmptyGrid();
 	});
 
 	const runningRef = useRef(running);
 	runningRef.current = running;
+
+	const generationRef = useRef(generation);
+	generationRef.current = generation;
+
+	const speedRef = useRef(speed);
+	speedRef.current = speed;
 
 	const runSim = useCallback(() => {
 		if (!runningRef.current) {
@@ -59,12 +67,21 @@ function Game() {
 				}
 			});
 		});
-		setTimeout(runSim, speed);
-	});
+		setGeneration(++generationRef.current);
+		setTimeout(runSim, speedRef.current);
+	}, []);
 	return (
 		<>
+			<h1 style={{ display: 'flex', justifyContent: 'center' }}>
+				Conway's Game Of Life
+			</h1>
+			<h3 style={{ display: 'flex', justifyContent: 'center' }}>
+				Generation: {generation}
+			</h3>
 			<div
 				style={{
+					display: 'flex',
+					justifyContent: 'center',
 					display: 'grid',
 					gridTemplateColumns: `repeat(${numCols}, 22px)`,
 				}}
@@ -89,39 +106,58 @@ function Game() {
 					))
 				)}
 			</div>
-			<button
-				onClick={() => {
-					setRunning(!running);
-					if (!running) {
-						runningRef.current = true;
-						runSim();
-					}
-				}}
-			>
-				{running ? 'stop' : 'start'}
-			</button>
+			<div className="btn">
+				<button
+					onClick={() => {
+						setRunning(!running);
+						if (!running) {
+							runningRef.current = true;
+							runSim();
+						}
+					}}
+				>
+					{running ? 'Stop' : 'Start'}
+				</button>
 
-			<button
-				onClick={() => {
-					setGrid(EmptyGrid());
-				}}
-			>
-				clear
-			</button>
+				<button
+					onClick={() => {
+						setGrid(EmptyGrid());
+						setGeneration(0);
+					}}
+				>
+					Clear
+				</button>
 
-			<button
-				onClick={() => {
-					const rows = [];
-					for (let i = 0; i < numRows; i++) {
-						rows.push(
-							Array.from(Array(numCols), () => (Math.random() > 0.5 ? 1 : 0))
-						);
-					}
-					setGrid(rows);
-				}}
-			>
-				random
-			</button>
+				<button
+					onClick={() => {
+						setSpeed(50);
+					}}
+				>
+					Speed Up
+				</button>
+
+				<button
+					onClick={() => {
+						setSpeed(1000);
+					}}
+				>
+					Speed Down
+				</button>
+
+				<button
+					onClick={() => {
+						const rows = [];
+						for (let i = 0; i < numRows; i++) {
+							rows.push(
+								Array.from(Array(numCols), () => (Math.random() > 0.5 ? 1 : 0))
+							);
+						}
+						setGrid(rows);
+					}}
+				>
+					Random
+				</button>
+			</div>
 		</>
 	);
 }
